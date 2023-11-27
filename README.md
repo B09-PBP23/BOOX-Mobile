@@ -1,12 +1,12 @@
 # boox_mobile
 
 ## Anggota Kelompok:
-Aldyandry Nureza Phutra - 2206809936
-Fadhil Muhammad - 2206083464
-Neva Denstia Shabira - 2206083073
-Salma Kurnia Dewi - 2206026681
-Theodore Kasyfillah -  2206083136
-Yoshelin Yamala Vijnana - 22062826702
+1. Aldyandry Nureza Phutra - 2206809936
+2. Fadhil Muhammad - 2206083464
+3. Neva Denstia Shabira - 2206083073
+4. Salma Kurnia Dewi - 2206026681
+5. Theodore Kasyfillah -  2206083136
+6. Yoshelin Yamala Vijnana - 22062826702
 
 
 ## Deskripsi Aplikasi:
@@ -39,8 +39,12 @@ Riwayat Ulasan: Ini adalah daftar ulasan buku yang telah ditulis oleh pengguna. 
 - Bookmarks:
 Pada setiap buku, tersedia tombol “Bookmarks” yang bertujuan untuk mempermudah pengguna dalam menandai buku yang ingin mereka markah. Dengan adanya halaman bookmarks, maka pengguna dapat mengakses kembali buku apa saja yang menarik perhatian pengguna. Pada halaman ini, akan ditampilkan semua buku yang telah di-markah oleh pengguna. Fitur ini akan membantu pengguna untuk mengorganisir buku yang ditandai dalam satu tempat yang mudah diakses.
 
-- Reviews : 
-Modul reviews berfungsi bagi para pengguna untuk menambahkan review mengenai sebuah buku. Modul ini dapat diakses di halaman review buku yang sudah ada. Apabila belum ada halaman review mengenai suatu buku, pengguna dapat membuat halaman review yang baru menggunakan modul ini. Pengguna juga bisa menambahkan review sebuah buku di halaman pengguna dapat mengedit reviewnya.
+- Add Reviews : 
+Modul add reviews berfungsi bagi para pengguna untuk menambahkan review mengenai sebuah buku. Modul ini dapat diakses di halaman review buku yang sudah ada. Apabila belum ada halaman review mengenai suatu buku, pengguna dapat membuat halaman review yang baru menggunakan modul ini. 
+
+- Edit Reviews:
+Setelah pengguna menambahkan review sebuah buku di halaman add review, pengguna dapat mengedit review tersebut melalui modul ini.
+
 
 - Fitur Utama:
 Formulir Review: formulir yang tersedia memungkinkan pengguna untuk mengisi informasi seperti judul review, peringkat (rating), teks ulasan, dan beberapa aspek tambahan seperti kategori buku, dan tanggal baca. 
