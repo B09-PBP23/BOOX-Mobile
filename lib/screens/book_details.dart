@@ -36,8 +36,13 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
             ),
             SizedBox(height: 16),
             Text(
-              'Author: ${widget.product.fields.author}',
+              '${widget.product.fields.title}',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            Text(
+              'Author: ${widget.product.fields.author}',
+              style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 8),
             Text(
