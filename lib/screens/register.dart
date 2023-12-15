@@ -40,7 +40,7 @@ class _RegisterPageState extends State<RegisterPage> {
     final request = context.watch<CookieRequest>();
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.black87,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(
@@ -48,8 +48,10 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                FlutterLogo(
-                  size: 100.0,
+                Image.asset(
+                  'images/booxlogo.png', 
+                  width: 200.0,
+                  height: 200.0,
                 ),
                 SizedBox(height: 16.0),
                 Text(

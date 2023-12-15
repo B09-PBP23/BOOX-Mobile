@@ -1,5 +1,6 @@
 import 'package:boox_mobile/screens/homepage.dart';
 import 'package:boox_mobile/screens/login.dart';
+import 'package:boox_mobile/screens/profilepage.dart';
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
@@ -58,13 +59,17 @@ class LeftDrawer extends StatelessWidget {
           ),
                     ListTile(
               leading: const Icon(Icons.person_outlined),
-              title: const Text('My Profle', style: TextStyle(color: Colors.white)),
+              title: const Text('My Profile', style: TextStyle(color: Colors.white)),
               onTap: () {
-                // TODO:
-              },
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UserProfilePage(),
+                ));
+            },
           ),
           ListTile(
-              leading: const Icon(Icons.shopping_basket),
+              leading: const Icon(Icons.favorite_border_outlined),
               title: const Text('Readers Favourite', style: TextStyle(color: Colors.white)),
               onTap: () {
                 // TODO:

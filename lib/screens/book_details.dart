@@ -18,8 +18,24 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.product.fields.title),
+        title: Text(
+          widget.product.fields.title,
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ),
+      backgroundColor: Colors.black87,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
@@ -37,34 +53,34 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
             SizedBox(height: 16),
             Text(
               '${widget.product.fields.title}',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
             ),
             SizedBox(height: 8),
             Text(
               'Author: ${widget.product.fields.author}',
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 16, color: Colors.white),
             ),
             SizedBox(height: 8),
             Text(
               'Year: ${widget.product.fields.year}',
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 16, color: Colors.white),
             ),
             SizedBox(height: 8),
             Text(
               'Publisher: ${widget.product.fields.publisher}',
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 16, color: Colors.white),
             ),
             SizedBox(height: 8),
             Text(
               'ISBN: ${widget.product.fields.isbn}',
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 16, color: Colors.white),
             ),
             SizedBox(height: 16),
-            Divider(height: 1, color: Colors.grey),
+            Divider(height: 1, color: Colors.white),
             SizedBox(height: 16),
             Text(
               'Reviews:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
             ),
 
             if (reviews.isNotEmpty)
@@ -83,11 +99,11 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
               Text('No reviews yet.'), 
             
             SizedBox(height: 16),
-            Divider(height: 1, color: Colors.grey),
+            Divider(height: 1, color: Colors.white),
             SizedBox(height: 16),
             Text(
               'Add a Review:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
             ),
             SizedBox(height: 8),
 
@@ -95,6 +111,7 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
             TextField(
               controller: reviewController,
               decoration: InputDecoration(
+                hintStyle: TextStyle(color: Colors.white),
                 hintText: 'Write your review...',
                 border: OutlineInputBorder(),
               ),

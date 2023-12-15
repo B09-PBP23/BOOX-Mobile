@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:boox_mobile/screens/register.dart';
 import 'package:boox_mobile/models/user.dart';
 import 'package:boox_mobile/screens/homepage.dart';
+import 'package:boox_mobile/screens/createprofilepage.dart';
 
 void main() {
     runApp(const LoginApp());
@@ -42,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
     final request = context.watch<CookieRequest>();
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.black87,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(
@@ -50,8 +51,10 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                FlutterLogo(
-                  size: 100.0,
+                Image.asset(
+                  'images/booxlogo.png', 
+                  width: 200.0,
+                  height: 200.0,
                 ),
                 SizedBox(height: 16.0),
                 Text(
@@ -82,48 +85,54 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: 20.0),
                 ElevatedButton(
-                  onPressed: () async {
-                    // TODO: Perform login logic
-                    final response = await request.login("https://boox-b09-tk.pbp.cs.ui.ac.id/auth/flutter_login/", {
-                      'username': _usernameController.text,
-                      'password': _passwordController.text,
-                    });
+                onPressed: () async {
+                  // TODO: Perform login logic
+                  final response = await request.login("https://boox-b09-tk.pbp.cs.ui.ac.id/auth/flutter_login/", {
+                    'username': _usernameController.text,
+                    'password': _passwordController.text,
+                  });
 
-                    if (request.loggedIn && User.username == "") {
-                      // Navigate to the home screen
-                      User.username = _usernameController.text;
-                      String uname = User.username;
+                  if (request.loggedIn) {
+                    User.username = _usernameController.text;
 
-                      ScaffoldMessenger.of(context)
-                        ..hideCurrentSnackBar()
-                        ..showSnackBar(
-                            SnackBar(content: Text("Successfully logged in. Welcome, $uname.")));
-
+                    if (User.profileCreated) {
+                      // Redirect to homepage if the profile is already created
                       Navigator.pushReplacement(
                         context, 
                         MaterialPageRoute(builder: (context) => HomePage()),
                       );
                     } else {
-                      showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                              title: const Text('Failed to Login'),
-                              content:
-                                  Text(response['message']),
-                              actions: [
-                                  TextButton(
-                                      child: const Text('OK'),
-                                      onPressed: () {
-                                          Navigator.pop(context);
-                                      },
-                                  ),
-                              ],
-                          ),
+                      // Redirect to profile creation page if the profile is not created
+                      ScaffoldMessenger.of(context)
+                        ..hideCurrentSnackBar()
+                        ..showSnackBar(
+                          SnackBar(content: Text("Successfully logged in. Please create your profile.")));
+
+                      Navigator.pushReplacement(
+                        context, 
+                        MaterialPageRoute(builder: (context) => NewUserProfileForm()),
                       );
                     }
-                  },
-                  child: Text('Login'),
-                ),
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Failed to Login'),
+                        content: Text(response['message']),
+                        actions: [
+                          TextButton(
+                            child: const Text('OK'),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                },
+                child: Text('Login'),
+              ),
                 SizedBox(height: 12.0),
                 TextButton(
                   onPressed: () {
