@@ -33,6 +33,10 @@ class BottomNavBar extends StatelessWidget {
           label: 'Readers Favourite',
         ),
         BottomNavigationBarItem(
+          icon: Icon(Icons.forum_outlined ),
+          label: 'Comment Section',
+        ),
+        BottomNavigationBarItem(
           icon: Icon(Icons.question_mark_outlined),
           label: 'Help',
         ),

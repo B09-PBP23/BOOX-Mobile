@@ -1,6 +1,8 @@
+import 'package:boox_mobile/screens/comment_section.dart';
 import 'package:boox_mobile/screens/homepage.dart';
 import 'package:boox_mobile/screens/login.dart';
 import 'package:boox_mobile/screens/profilepage.dart';
+import 'package:boox_mobile/screens/readers_favorite.dart';
 import 'package:flutter/material.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
@@ -34,12 +36,11 @@ class LeftDrawer extends StatelessWidget {
                 ),
                 Padding(padding: EdgeInsets.all(10)),
                 Text("Explore the world of books!",
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.white,
-                        fontWeight: FontWeight.normal,
-                      )
-                    ),
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                      fontWeight: FontWeight.normal,
+                    )),
               ],
             ),
           ),
@@ -54,48 +55,64 @@ class LeftDrawer extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => HomePage(),
-                ));
-            },
-          ),
-                    ListTile(
-              leading: const Icon(Icons.person_outlined),
-              title: const Text('My Profile', style: TextStyle(color: Colors.white)),
-              onTap: () {
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => UserProfilePage(),
-                ));
+                  ));
             },
           ),
           ListTile(
-              leading: const Icon(Icons.favorite_border_outlined),
-              title: const Text('Readers Favourite', style: TextStyle(color: Colors.white)),
-              onTap: () {
-                // TODO:
-              },
+            leading: const Icon(Icons.person_outlined),
+            title:
+                const Text('My Profle', style: TextStyle(color: Colors.white)),
+            onTap: () {
+              // TODO:
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.shopping_basket),
+            title: const Text('Readers Favorite',
+                style: TextStyle(color: Colors.white)),
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ReadersFavorite(),
+                  ));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.shopping_basket),
+            title: const Text('Comment Section',
+                style: TextStyle(color: Colors.white)),
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CommentSection(),
+                  ));
+            },
           ),
           ListTile(
             leading: const Icon(Icons.question_mark_outlined),
             title: const Text('Help', style: TextStyle(color: Colors.white)),
             onTap: () {
-              // TODO: 
+              // TODO:
             },
           ),
           ListTile(
             leading: const Icon(Icons.logout_outlined),
             title: const Text('Logout', style: TextStyle(color: Colors.white)),
             onTap: () async {
-              // TODO: 
-              final response = await request.logout( "https://boox-b09-tk.pbp.cs.ui.ac.id/auth/flutter_logout/");
+              // TODO:
+              final response = await request.logout(
+                  "https://boox-b09-tk.pbp.cs.ui.ac.id/auth/flutter_logout/");
               String message = response["message"];
               if (response['status']) {
                 User.username = "";
                 String uname = response["username"];
                 ScaffoldMessenger.of(context)
                   ..hideCurrentSnackBar()
-                  ..showSnackBar(
-                      SnackBar(content: Text("Successfully logged out. See you soon, $uname.")));
+                  ..showSnackBar(SnackBar(
+                      content: Text(
+                          "Successfully logged out. See you soon, $uname.")));
 
                 Navigator.pushReplacement(
                   context,

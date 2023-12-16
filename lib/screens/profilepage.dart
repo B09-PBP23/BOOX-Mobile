@@ -1,4 +1,6 @@
+import 'package:boox_mobile/screens/comment_section.dart';
 import 'package:boox_mobile/screens/createprofilepage.dart';
+import 'package:boox_mobile/screens/readers_favorite.dart';
 import 'package:flutter/material.dart';
 import 'package:boox_mobile/widgets/left_drawer.dart';
 import 'package:boox_mobile/screens/login.dart';
@@ -78,10 +80,24 @@ class _UserProfilePageState extends State<UserProfilePage> {
       case 1:
         break;
       case 2:
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ReadersFavorite(),
+            ),
+          );
         break;
       case 3:
+        Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CommentSection(),
+              ),
+            );
         break;
       case 4:
+        break;
+      case 5:
         _handleLogout();
         break;
       // Add cases for additional screens if needed
@@ -277,12 +293,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
                       SizedBox(height: 16),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => HomePage(),
-                            ),
-                          );
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => HomePage(),
+                          //   ),
+                          // );
                         },
                         child: Text(
                           'Show Bookmarked Books',

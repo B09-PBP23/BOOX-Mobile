@@ -1,3 +1,5 @@
+import 'package:boox_mobile/screens/comment_section.dart';
+import 'package:boox_mobile/screens/readers_favorite.dart';
 import 'package:flutter/material.dart';
 import 'package:boox_mobile/widgets/left_drawer.dart';
 import 'package:boox_mobile/screens/book_details.dart';
@@ -81,10 +83,24 @@ class _HomePageState extends State<HomePage> {
         );
         break;
       case 2:
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ReadersFavorite(),
+            ),
+          );
         break;
       case 3:
+        Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CommentSection(),
+              ),
+            );
         break;
       case 4:
+        break;
+      case 5:
         _handleLogout();
         break;
       // Add cases for additional screens if needed
