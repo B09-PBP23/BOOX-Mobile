@@ -204,77 +204,46 @@ class _ReadersFavoriteState extends State<ReadersFavorite> {
   }
 
   Future<void> handleUpvote(Product product) async {
+    // Simulate a loading delay, you can remove this in a real application
     await Future.delayed(Duration(seconds: 1));
 
-    final response = await http.get(
+    final response = await http.post(
       Uri.parse(
-          'https://boox-b09-tk.pbp.cs.ui.ac.id/readers-favorite/check_upvote_status/${product.pk}'),
+          'https://boox-b09-tk.pbp.cs.ui.ac.id/readers-favorite/add_upvote_ajax/${product.pk}/'),
       headers: {
         'Content-Type': 'application/json',
       },
     );
 
     if (response.statusCode == 200) {
-      final bool isUpvoted = jsonDecode(response.body)['has_upvoted'];
-      if (isUpvoted) {
-        _showPopup('Product is already upvoted.');
-      } else {
-        _showPopup('Product is not upvoted. Perform upvote action.');
-        await performUpvote(product);
-        // Fetch items again after upvote
-        await fetchItems();
-      }
+      // Successfully upvoted, update the UI or handle the response accordingly
+      print('Upvote successful');
+
+      // Reload the items after upvoting
+      await fetchItems();
+
+      // Show a dialog to indicate successful upvote
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Upvote Successful'),
+            content: Text('You have successfully upvoted the book!'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
     } else {
-      _showPopup(
-          'Failed to check upvote status. Error: ${response.reasonPhrase}');
+      // Failed to upvote, handle the error
+      print('Upvote failed');
+      // You might want to display an error message to the user or handle the error in some way
     }
-  }
-
-  Future<void> performUpvote(Product product) async {
-    final response = await http.post(
-      Uri.parse(
-          'https://boox-b09-tk.pbp.cs.ui.ac.id/readers-favorite/add_upvote_ajax/${product.pk}'),
-    );
-
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> responseData = jsonDecode(response.body);
-
-      if (responseData['success'] == true) {
-        setState(() {
-          product.fields.totalUpvotes += 1;
-        });
-
-        // Show a success popup
-        _showPopup('Upvote Successful');
-        // Fetch items again after upvote
-        await fetchItems();
-      } else {
-        // Show a failure popup
-        _showPopup('Upvote Failed: ${responseData['message']}');
-      }
-    } else {
-      // Show a failure popup
-      _showPopup('Failed to perform upvote. Error: ${response.reasonPhrase}');
-    }
-  }
-
-  void _showPopup(String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Upvote Status'),
-          content: Text(message),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the popup
-              },
-              child: Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
   }
 }
