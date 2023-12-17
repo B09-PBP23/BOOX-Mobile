@@ -67,7 +67,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     setState(() {
       _selectedIndex = index;
     });
-    
+
     switch (index) {
       case 0:
         Navigator.pushReplacement(
@@ -76,8 +76,13 @@ class _UserProfilePageState extends State<UserProfilePage> {
             builder: (context) => HomePage(),
           ),
         );
-        break;
       case 1:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => UserProfilePage(),
+          ),
+        );
         break;
       case 2:
         Navigator.pushReplacement(
@@ -96,8 +101,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
             );
         break;
       case 4:
-        break;
-      case 5:
         _handleLogout();
         break;
       // Add cases for additional screens if needed

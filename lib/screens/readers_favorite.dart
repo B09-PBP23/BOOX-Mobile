@@ -78,7 +78,7 @@ class _ReadersFavoriteState extends State<ReadersFavorite> {
     setState(() {
       _selectedIndex = index;
     });
-    
+
     switch (index) {
       case 0:
         Navigator.pushReplacement(
@@ -87,7 +87,6 @@ class _ReadersFavoriteState extends State<ReadersFavorite> {
             builder: (context) => HomePage(),
           ),
         );
-        break;
       case 1:
         Navigator.pushReplacement(
           context,
@@ -113,8 +112,6 @@ class _ReadersFavoriteState extends State<ReadersFavorite> {
             );
         break;
       case 4:
-        break;
-      case 5:
         _handleLogout();
         break;
       // Add cases for additional screens if needed

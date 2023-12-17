@@ -88,11 +88,10 @@ class _AddCommentScreenState extends State<AddCommentScreen> {
           children: [
             TextField(
               controller: commentController,
-              style: TextStyle(color: Colors.white), // Set text color to white
+              style: TextStyle(color: Colors.white), 
               decoration: InputDecoration(
                 labelText: 'Enter your comment',
-                labelStyle: TextStyle(color: Colors.white), // Set label color to white
-                // Border and focused border color
+                labelStyle: TextStyle(color: Colors.white), 
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.white),
                 ),

@@ -115,7 +115,7 @@ class _CommentSectionState extends State<CommentSection> {
     setState(() {
       _selectedIndex = index;
     });
-    
+
     switch (index) {
       case 0:
         Navigator.pushReplacement(
@@ -124,7 +124,6 @@ class _CommentSectionState extends State<CommentSection> {
             builder: (context) => HomePage(),
           ),
         );
-        break;
       case 1:
         Navigator.pushReplacement(
           context,
@@ -142,10 +141,14 @@ class _CommentSectionState extends State<CommentSection> {
           );
         break;
       case 3:
+        Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CommentSection(),
+              ),
+            );
         break;
       case 4:
-        break;
-      case 5:
         _handleLogout();
         break;
       // Add cases for additional screens if needed
@@ -311,7 +314,6 @@ class _CommentSectionState extends State<CommentSection> {
       ),
     );
   }
-
 
   Widget refreshCommenters(Commenters person) {
     int userPK = person.fields.user;

@@ -36,10 +36,10 @@ class BottomNavBar extends StatelessWidget {
           icon: Icon(Icons.forum_outlined ),
           label: 'Comment Section',
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.question_mark_outlined),
-          label: 'Help',
-        ),
+        // BottomNavigationBarItem(
+        //   icon: Icon(Icons.question_mark_outlined),
+        //   label: 'Help',
+        // ),
         BottomNavigationBarItem(
           icon: Icon(Icons.logout_outlined),
           label: 'Logout',

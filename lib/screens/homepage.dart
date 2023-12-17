@@ -73,7 +73,12 @@ class _HomePageState extends State<HomePage> {
 
     switch (index) {
       case 0:
-        break;
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomePage(),
+          ),
+        );
       case 1:
         Navigator.pushReplacement(
           context,
@@ -99,8 +104,6 @@ class _HomePageState extends State<HomePage> {
             );
         break;
       case 4:
-        break;
-      case 5:
         _handleLogout();
         break;
       // Add cases for additional screens if needed
