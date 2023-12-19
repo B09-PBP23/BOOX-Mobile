@@ -2,7 +2,7 @@ import 'package:boox_mobile/models/review.dart';
 import 'package:boox_mobile/models/user.dart';
 import 'package:boox_mobile/screens/add_review.dart';
 import 'package:boox_mobile/screens/homepage.dart';
-// import 'package:boox_mobile/screens/edit_review.dart';
+import 'package:boox_mobile/screens/edit_review.dart';
 import 'package:boox_mobile/screens/show_review.dart';
 import 'package:flutter/material.dart';
 import 'package:boox_mobile/models/books.dart';
@@ -23,6 +23,42 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
   bool isLoadingReviews = true; // Track loading status
   String currentUsername = User.username;
 
+  void onReviewDeleted() {
+    _loadReviews();
+  }
+
+  void checkUserReviewStatus() {
+    userHasReviewed = false;
+  }
+
+  Widget _buildReviewActionButton() {
+    if (userHasReviewed) {
+      return ElevatedButton(
+        onPressed: _showEditReviewSheet,
+        style: ElevatedButton.styleFrom(
+          primary: Color(0xFFFFFFFF),
+          onPrimary: Color(0xFFD85EA9),
+        ),
+        child: Text(
+          'Edit Review',
+          style: TextStyle(color: Color(0xFFD85EA9)),
+        ),
+      );
+    } else {
+      return ElevatedButton(
+        onPressed: _showAddReviewSheet,
+        style: ElevatedButton.styleFrom(
+          primary: Color(0xFFD85EA9),
+          onPrimary: Color(0xFFFFFFFF),
+        ),
+        child: Text(
+          'Add Review',
+          style: TextStyle(color: Color(0xFFFFFFFF)),
+        ),
+      );
+    }
+  }
+
   void _showAddReviewSheet() async {
     final bool? result = await showModalBottomSheet<bool>(
       context: context,
@@ -38,25 +74,28 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
       },
     );
     if (result == true) {
-      _refreshPage();
+      refreshPageForReview();
     }
   }
 
-  // void _showEditReviewSheet() {
-  //   showModalBottomSheet(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return ReviewEditBottomSheet(
-  //         product: widget.product,
-  //         onReviewSubmitted: (Review review) {
-  //           setState(() {
-  //             reviews.add(review);
-  //           });
-  //         },
-  //       );
-  //     },
-  //   );
-  // }
+  void _showEditReviewSheet() async {
+    final bool? result = await showModalBottomSheet<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return ReviewEditBottomSheet(
+          product: widget.product,
+          onReviewSubmitted: (Review review) {
+            setState(() {
+              reviews.add(review);
+            });
+          },
+        );
+      },
+    );
+    if (result == true) {
+      refreshPageForReview();
+    }
+  }
 
   @override
   void initState() {
@@ -94,11 +133,9 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
     }
   }
 
-  _refreshPage() async {
+  refreshPageForReview() async {
     await _loadReviews();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -173,7 +210,7 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
               'Reviews:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
             ),
-            isLoadingReviews? Center(child: CircularProgressIndicator()): _buildReviewList(reviews),
+            isLoadingReviews? Center(child: CircularProgressIndicator()): buildReviewList(context, reviews, currentUsername, onReviewDeleted, checkUserReviewStatus),
             SizedBox(height: 16),
             Divider(height: 1, color: Colors.grey),
             SizedBox(height: 16),
@@ -182,24 +219,12 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 8),
-            isLoadingReviews? Center(child: CircularProgressIndicator()) : Align(
-              alignment: Alignment.center,
-              child: ElevatedButton(
-                // onPressed: userHasReviewed ? _showEditReviewSheet : _showAddReviewSheet,
-                onPressed: _showAddReviewSheet,
-                style: ElevatedButton.styleFrom(
-                  primary: userHasReviewed ? Color(0xFFFFFFFF) : Color(0xFFD85EA9), // Change button color
-                  onPrimary: userHasReviewed ? Color(0xFFD85EA9) : Color(0xFFFFFFFF), // Change text color
-                ),
-                child: Text(
-                  userHasReviewed ? 'Edit Review' : 'Add Review',
-                  style: TextStyle(
-                    color: userHasReviewed ? Color(0xFFD85EA9) : Color(0xFFFFFFFF), // Change text color
-                  ),
-                ),
+            SizedBox(height: 16),
+            if (!isLoadingReviews) 
+              Align(
+                alignment: Alignment.center,
+                child: _buildReviewActionButton(),
               ),
-            ),
           ],
         ),
       ),
@@ -207,32 +232,3 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
   }
 }
 
- Widget _buildReviewList(List<Review> reviews) {
-  if (reviews.isNotEmpty) {
-    return Column(
-      children: reviews.map((Review review) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: ListTile(
-            title: Text(
-              review.fields.username,
-              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white), 
-            ),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(review.fields.review,
-                style: TextStyle(color: Colors.white), ),
-                SizedBox(height: 8),
-                buildRatingStars(review.fields.rating),
-              ],
-            ),
-            trailing: Text(review.fields.createdAt.toIso8601String()),
-          ),
-        );
-      }).toList(),
-    );
-  } else {
-    return Text('No reviews yet.');
-  }
-}

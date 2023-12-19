@@ -1,29 +1,64 @@
+import 'dart:convert';
+
 import 'package:boox_mobile/models/review.dart';
 import 'package:flutter/material.dart';
 import 'package:boox_mobile/models/books.dart';
 import 'package:http/http.dart' as http;
 
-class ReviewAddBottomSheet extends StatefulWidget {
+class ReviewEditBottomSheet extends StatefulWidget {
   final Product product;
   final Function(Review) onReviewSubmitted;
 
-  const ReviewAddBottomSheet({
+  const ReviewEditBottomSheet({
     Key? key,
     required this.product,
     required this.onReviewSubmitted,
   }) : super(key: key);
 
   @override
-  _ReviewAddBottomSheetState createState() => _ReviewAddBottomSheetState();
+  _ReviewEditBottomSheetState createState() => _ReviewEditBottomSheetState();
 }
 
-class _ReviewAddBottomSheetState extends State<ReviewAddBottomSheet> {
+class _ReviewEditBottomSheetState extends State<ReviewEditBottomSheet> {
   TextEditingController _reviewController = TextEditingController();
-  int _selectedRating = 1; // Default to 1 star
+  int _selectedRating = 1;
+  bool _isLoading = true;
+  Review? _existingReview;
+  int _idreview = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchAndSetReview();
+  }
+
+  void _fetchAndSetReview() async {
+    try {
+      var reviews = await fetchReviewsByUser(widget.product.pk);
+      if (reviews.isNotEmpty) {
+        setState(() {
+          _existingReview = reviews.first;
+          _reviewController.text = _existingReview!.fields.review;
+          _selectedRating = _existingReview!.fields.rating;
+          _isLoading = false;
+          _idreview = _existingReview!.pk;
+        });
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      print('Error fetching review: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return _isLoading? CircularProgressIndicator() : SingleChildScrollView(
       child: Container(
         color: Colors.black87,
         padding: const EdgeInsets.all(16.0),
@@ -32,7 +67,7 @@ class _ReviewAddBottomSheetState extends State<ReviewAddBottomSheet> {
           children: <Widget>[
             Image.network(widget.product.fields.imageUrlL, height: 100), // Adjust the height accordingly
             Text(
-              'Add Your Review for "${widget.product.fields.title}"',
+              'Edit Your Review for "${widget.product.fields.title}"',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
@@ -74,14 +109,14 @@ class _ReviewAddBottomSheetState extends State<ReviewAddBottomSheet> {
                 labelText: 'Rating',
                 border: OutlineInputBorder(),
               ),
-              dropdownColor: Colors.black87,
+               dropdownColor: Colors.black87,
             ),
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: () async {
                 if (_reviewController.text.isNotEmpty) {
-                  bool isSuccess = await submitReview(
-                    widget.product.pk, // ID buku
+                  bool isSuccess = await editReviewFlutter(
+                    _idreview, // ID review
                     _reviewController.text, // Teks review
                     _selectedRating, // Rating
                   );
@@ -124,30 +159,52 @@ class _ReviewAddBottomSheetState extends State<ReviewAddBottomSheet> {
   }
 }
 
-Future<bool> submitReview(int bookId, String reviewText, int rating) async {
-  var url = Uri.parse('https://boox-b09-tk.pbp.cs.ui.ac.id/add_review/add_review_ajax/');
-  
+Future<List<Review>> fetchReviewsByUser(int bookId) async {
+  try {
+    final response = await http.get(
+      Uri.parse('https://boox-b09-tk.pbp.cs.ui.ac.id/add_review/get_review_by_user/$bookId'),
+
+      headers: {"Content-Type": "application/json"},
+    );
+
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      return jsonResponse.map((review) => Review.fromJson(review)).toList();
+    } else {
+      // If server returns an OK response with an empty list, handle that case
+      if (response.body.isEmpty) return [];
+      throw Exception('Failed to load reviews for book ID: $bookId with status code: ${response.statusCode}');
+    }
+  } on Exception catch (e) {
+    // For any exceptions thrown during the HTTP request
+    throw Exception('Error fetching reviews for book ID: $bookId: $e');
+  }
+}
+
+Future<bool> editReviewFlutter(int reviewId, String reviewText, int rating) async {
+  var url = Uri.parse('https://boox-b09-tk.pbp.cs.ui.ac.id/editreview/edit-review-flutter/');  
   var response = await http.post(
     url,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Accept': 'application/json',
+      // Sertakan header autentikasi jika diperlukan, seperti token
     },
     body: {
-      'book': bookId.toString(),
+      'id': reviewId.toString(),  // Pastikan untuk mengirimkan ID review yang benar
       'review': reviewText,
       'rating': rating.toString(),
     },
   );
 
-  if (response.statusCode == 201) {
-    // Berhasil membuat review baru
+  if (response.statusCode == 200) {
+    // Request berhasil dan review telah diperbarui
     return true;
-  } else if (response.statusCode == 200) {
-    // Review sudah ada
-    return false;
   } else {
-    // Terjadi error
-    throw Exception('Failed to submit review');
+    // Terjadi kesalahan saat mengedit review
+    print('Failed to edit review: ${response.body}');
+    return false;
   }
 }
+
+

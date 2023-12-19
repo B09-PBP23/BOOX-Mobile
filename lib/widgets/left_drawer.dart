@@ -70,6 +70,7 @@ class LeftDrawer extends StatelessWidget {
                   ));
             },
           ),
+          
           ListTile(
             leading: const Icon(Icons.shopping_basket),
             title: const Text('Readers Favorite',
@@ -101,6 +102,7 @@ class LeftDrawer extends StatelessWidget {
               // TODO:
             },
           ),
+          
           ListTile(
             leading: const Icon(Icons.logout_outlined),
             title: const Text('Logout', style: TextStyle(color: Colors.white)),
