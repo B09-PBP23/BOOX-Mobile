@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:boox_mobile/models/books.dart';
+import 'package:boox_mobile/screens/editreview.dart';
 
 class BookDetailsPage extends StatefulWidget {
   final Product product;
@@ -13,6 +14,21 @@ class BookDetailsPage extends StatefulWidget {
 class _BookDetailsPageState extends State<BookDetailsPage> {
   List<String> reviews = []; // List to store reviews
   TextEditingController reviewController = TextEditingController();
+
+  void _navigateToEditReview() {
+    // Assuming that the user's review is the first one in the list.
+    // Replace this with the actual logic to get the specific user's review.
+    String userReview = reviews.isNotEmpty ? reviews.first : '';
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => EditReviewPage(
+          review: userReview,
+          // Pass any other necessary data to the EditReviewPage
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +84,7 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
             ),
 
             if (reviews.isNotEmpty)
+              
               // TODO: Bagian reviews
               Column(
                 children: reviews
