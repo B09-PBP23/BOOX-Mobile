@@ -1,17 +1,19 @@
+
+import 'package:boox_mobile/models/user.dart';
 import 'package:boox_mobile/screens/comment_section.dart';
+import 'package:boox_mobile/screens/login.dart';
+import 'package:boox_mobile/screens/profilepage.dart';
 import 'package:boox_mobile/screens/readers_favorite.dart';
+import 'package:boox_mobile/widgets/bottom_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:boox_mobile/widgets/left_drawer.dart';
 import 'package:boox_mobile/screens/book_details.dart';
-import 'package:boox_mobile/screens/profilepage.dart';
-import 'package:boox_mobile/screens/login.dart';
-import 'package:boox_mobile/widgets/bottom_nav.dart';
 import 'package:boox_mobile/models/books.dart';
 import 'package:http/http.dart' as http;
-import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'dart:convert';
+
+import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
-import 'package:boox_mobile/models/user.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -25,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   late TextEditingController searchController;
   late List<Product> allProducts;
   List<Product> displayedProducts = [];
-  int _selectedIndex = 0;
+  int _selectedIndex = 1; // Index for the selected tab
 
   @override
   void initState() {
@@ -47,6 +49,8 @@ class _HomePageState extends State<HomePage> {
         'Content-Type': 'application/json',
       },
     );
+
+    print(response.body);
 
     var data = jsonDecode(utf8.decode(response.bodyBytes));
 
@@ -156,7 +160,7 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavBar(
         selectedIndex: _selectedIndex,
         onItemTapped: onBottomNavTapped,
-      ), // Navbar
+      ),
       backgroundColor: Colors.black87,
       body: FutureBuilder(
         future: Future.value(displayedProducts),
@@ -172,8 +176,7 @@ class _HomePageState extends State<HomePage> {
               return const Column(
                 children: [
                   Text("No Data",
-                      style: TextStyle(
-                          color: Color(0xff59A5D8), fontSize: 20)),
+                      style: TextStyle(color: Color(0xff59A5D8), fontSize: 20)),
                   SizedBox(height: 8),
                 ],
               );
@@ -197,7 +200,9 @@ class _HomePageState extends State<HomePage> {
                         Text(
                           'Discover the latest and most popular books.',
                           style: TextStyle(
-                              fontSize: 16, color: Colors.white), // Pink color for the description
+                              fontSize: 16,
+                              color: Colors
+                                  .white), // Pink color for the description
                         ),
                       ],
                     ),
@@ -214,7 +219,8 @@ class _HomePageState extends State<HomePage> {
                             });
                             performSearch();
                           },
-                          items: ['Title', 'Author', 'Publisher'].map((String value) {
+                          items: ['Title', 'Author', 'Publisher']
+                              .map((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
                               child: Text(value),
@@ -243,7 +249,7 @@ class _HomePageState extends State<HomePage> {
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.white,
-                            ), 
+                            ),
                           ),
                         ),
                         SizedBox(width: 16),
@@ -258,10 +264,10 @@ class _HomePageState extends State<HomePage> {
                   ),
                   Expanded(
                     child: ListView.builder(
-                            itemCount: displayedProducts.length,
-                            itemBuilder: (_, index) =>
-                                buildItemList(displayedProducts[index]),
-                          ),
+                      itemCount: displayedProducts.length,
+                      itemBuilder: (_, index) =>
+                          buildItemList(displayedProducts[index]),
+                    ),
                   ),
                 ],
               );
@@ -309,9 +315,8 @@ class _HomePageState extends State<HomePage> {
     String bookYear = product.fields.year.toString();
     String bookPublisher = product.fields.publisher;
 
-    bookTItle = bookTItle.length > 30
-        ? bookTItle.substring(0, 30) + "..."
-        : bookTItle;
+    bookTItle =
+        bookTItle.length > 30 ? bookTItle.substring(0, 30) + "..." : bookTItle;
 
     return InkWell(
       onTap: () {
@@ -343,6 +348,11 @@ class _HomePageState extends State<HomePage> {
                   height: 150,
                   width: 100,
                   fit: BoxFit.cover,
+                  errorBuilder: (context, obj, str) => Image.network(
+                    "https://lightwidget.com/wp-content/uploads/localhost-file-not-found.jpg",
+                    height: 150,
+                    width: 100,
+                  ),
                 ),
               ),
               Expanded(
@@ -362,25 +372,86 @@ class _HomePageState extends State<HomePage> {
                       Text(
                         'Author: ${bookAuthor}',
                         style: const TextStyle(
-                            fontSize: 16, color: Colors.grey), // Black color for the text
+                            fontSize: 16,
+                            color: Colors.grey), // Black color for the text
                       ),
                       SizedBox(height: 4),
                       Text(
                         'Year: ${bookYear}',
-                        style: const TextStyle(
-                            fontSize: 16, color: Colors.black),
+                        style:
+                            const TextStyle(fontSize: 16, color: Colors.black),
                       ),
                       SizedBox(height: 4),
                       Text(
                         'Publisher: ${bookPublisher}',
-                        style: const TextStyle(
-                            fontSize: 16, color: Colors.black), 
+                        style:
+                            const TextStyle(fontSize: 16, color: Colors.black),
                       ),
                       Text(
                         'Rating: ${rating.toStringAsFixed(1)}/5.0',
-                        style: const TextStyle(
-                            fontSize: 16, color: Colors.black), 
+                        style:
+                            const TextStyle(fontSize: 16, color: Colors.black),
                       ),
+                      SizedBox(height: 10),
+                      ElevatedButton(
+                          onPressed: () async {
+                            try {
+                              final request = context.read<CookieRequest>();
+                              // print("masuk");
+                              //
+                              // print("request.cookies");
+                              // print(request.local.getKeys());
+                              // print(request.headers);
+                              // print(request.jsonData);
+                              // print(request.getJsonData());
+                              // print(request.local.get("cookies"));
+
+                              final response = await http.post(
+                                  Uri.parse(
+                                      "https://boox-b09-tk.pbp.cs.ui.ac.id/bookmarks/add_to_bookmark/${product.pk}/"),
+                                  headers: {
+                                    "Content-Type":
+                                        "application/json; charset=UTF-8",
+                                    "X-CSRFToken":
+                                        request.cookies['csrftoken']!.name,
+                                    "Cookie":
+                                        "csrftoken=${request.cookies['csrftoken']!.value};sessionid=${request.cookies['sessionid']!.value}",
+                                  });
+                              print("masuk");
+
+                              print(response.body);
+                              print(response.statusCode);
+
+                              if (response.statusCode == 200) {
+                                var result = json.decode(response.body);
+                                final snackBar = SnackBar(
+                                  content: Text(result['message']),
+                                  duration: Duration(seconds: 2),
+                                );
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              } else if (response.statusCode == 400) {
+                                var result = json.decode(response.body);
+
+                                final snackBar = SnackBar(
+                                  content: Text(result['message']),
+                                  duration: Duration(seconds: 2),
+                                );
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              } else {
+                                final snackBar = SnackBar(
+                                  content: Text("Error"),
+                                  duration: Duration(seconds: 2),
+                                );
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              }
+                            } catch (e) {
+                              print("catch : " + e.toString());
+                            }
+                          },
+                          child: Text("Add Bookmark"))
                     ],
                   ),
                 ),
