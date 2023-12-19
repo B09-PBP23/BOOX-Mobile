@@ -121,14 +121,14 @@ class _CommentSectionState extends State<CommentSection> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => HomePage(),
+            builder: (context) => const HomePage(),
           ),
         );
       case 1:
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => UserProfilePage(),
+            builder: (context) => const UserProfilePage(),
           ),
         );
         break;
@@ -136,7 +136,7 @@ class _CommentSectionState extends State<CommentSection> {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => ReadersFavorite(),
+              builder: (context) => const ReadersFavorite(),
             ),
           );
         break;
@@ -144,7 +144,7 @@ class _CommentSectionState extends State<CommentSection> {
         Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => CommentSection(),
+                builder: (context) => const CommentSection(),
               ),
             );
         break;
@@ -209,8 +209,8 @@ class _CommentSectionState extends State<CommentSection> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -235,7 +235,7 @@ class _CommentSectionState extends State<CommentSection> {
                 ),
                 ListView.builder(
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: displayedComments.length,
                   itemBuilder: (_, index) =>
                       refreshCommentSection(displayedComments[index]),
@@ -254,7 +254,7 @@ class _CommentSectionState extends State<CommentSection> {
                       fetchComments();
                       fetchCommenters();
                     },
-                    child: Row(
+                    child: const Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(
@@ -275,7 +275,7 @@ class _CommentSectionState extends State<CommentSection> {
                     ),
                     style: ElevatedButton.styleFrom(
                       primary: Colors.pink,
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -283,8 +283,8 @@ class _CommentSectionState extends State<CommentSection> {
                   ),
                 ),
               ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -302,7 +302,7 @@ class _CommentSectionState extends State<CommentSection> {
                 ),
                 ListView.builder(
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: displayedContributors.length,
                   itemBuilder: (_, index) =>
                       refreshCommenters(displayedContributors[index]),

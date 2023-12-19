@@ -34,7 +34,6 @@ class Product {
 
 class Fields {
     int user;
-    String profilePicture;
     String name;
     DateTime dateJoined;
     String description;
@@ -43,7 +42,6 @@ class Fields {
 
     Fields({
         required this.user,
-        required this.profilePicture,
         required this.name,
         required this.dateJoined,
         required this.description,
@@ -53,7 +51,6 @@ class Fields {
 
     factory Fields.fromJson(Map<String, dynamic> json) => Fields(
         user: json["user"],
-        profilePicture: json["profile_picture"],
         name: json["name"],
         dateJoined: DateTime.parse(json["date_joined"]),
         description: json["description"],
@@ -63,7 +60,6 @@ class Fields {
 
     Map<String, dynamic> toJson() => {
         "user": user,
-        "profile_picture": profilePicture,
         "name": name,
         "date_joined": "${dateJoined.year.toString().padLeft(4, '0')}-${dateJoined.month.toString().padLeft(2, '0')}-${dateJoined.day.toString().padLeft(2, '0')}",
         "description": description,

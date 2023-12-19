@@ -63,7 +63,11 @@ class LeftDrawer extends StatelessWidget {
             title:
                 const Text('My Profle', style: TextStyle(color: Colors.white)),
             onTap: () {
-              // TODO:
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UserProfilePage(),
+                  ));
             },
           ),
           ListTile(

@@ -35,7 +35,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   }
 
   Future<void> fetchUserProfile() async {
-    var url = Uri.parse("https://boox-b09-tk.pbp.cs.ui.ac.id/profile/json/");
+    var url = Uri.parse("https://boox-b09-tk.pbp.cs.ui.ac.id/profile/json/${User.id}/");
     var response = await http.get(
       url,
       headers: {
@@ -45,6 +45,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
 
     if (response.statusCode == 200) {
       var data = jsonDecode(utf8.decode(response.bodyBytes));
+      print('Response body: ${response.body}');
 
       List<Product> userProfiles = []; // Change Product to your model class
       for (var userData in data) {
@@ -155,10 +156,13 @@ class _UserProfilePageState extends State<UserProfilePage> {
         onItemTapped: onBottomNavTapped,
       ),
       backgroundColor: Colors.black87,
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+      body: FutureBuilder(
+        future: Future.value(displayedProducts),
+        builder: (context, AsyncSnapshot<List<Product>> snapshot) {
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
             const SizedBox(height: 16),
             displayedProducts.isNotEmpty
                 ? Column(
@@ -322,10 +326,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 ),
               ),
             ],
-          ),
-        ),
-      );
-   }
+            ),
+          );
+      },
+    ),
+  );
+}
 
   Widget _buildProfileStat(String title, String value) {
     return Column(

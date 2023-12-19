@@ -98,6 +98,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   if (request.loggedIn) {
                     User.username = _usernameController.text;
+                    User.id = response['id'];
 
                     if (User.profileCreated) {
                       // Redirect to homepage if the profile is already created
