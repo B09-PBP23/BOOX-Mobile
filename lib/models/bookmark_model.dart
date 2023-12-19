@@ -53,5 +53,7 @@ class BookmarModel {
     "book_id": bookId,
     "isbn": isbn,
     "title": title,
+    "author": author,
+    "year": year,
   };
 }
