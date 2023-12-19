@@ -1,9 +1,17 @@
+import 'package:boox_mobile/screens/comment_section.dart';
+import 'package:boox_mobile/screens/readers_favorite.dart';
 import 'package:flutter/material.dart';
 import 'package:boox_mobile/widgets/left_drawer.dart';
 import 'package:boox_mobile/screens/book_details.dart';
+import 'package:boox_mobile/screens/profilepage.dart';
+import 'package:boox_mobile/screens/login.dart';
+import 'package:boox_mobile/widgets/bottom_nav.dart';
 import 'package:boox_mobile/models/books.dart';
 import 'package:http/http.dart' as http;
+import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'dart:convert';
+import 'package:provider/provider.dart';
+import 'package:boox_mobile/models/user.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -17,6 +25,7 @@ class _HomePageState extends State<HomePage> {
   late TextEditingController searchController;
   late List<Product> allProducts;
   List<Product> displayedProducts = [];
+  int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -57,6 +66,77 @@ class _HomePageState extends State<HomePage> {
     return products;
   }
 
+  void onBottomNavTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    switch (index) {
+      case 0:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomePage(),
+          ),
+        );
+      case 1:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => UserProfilePage(),
+          ),
+        );
+        break;
+      case 2:
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ReadersFavorite(),
+            ),
+          );
+        break;
+      case 3:
+        Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CommentSection(),
+              ),
+            );
+        break;
+      case 4:
+        _handleLogout();
+        break;
+      // Add cases for additional screens if needed
+      }
+    }
+
+  Future<void> _handleLogout() async {
+    final request = context.read<CookieRequest>();
+    final response = await request.logout("https://boox-b09-tk.pbp.cs.ui.ac.id/auth/flutter_logout/");
+    String message = response["message"];
+
+    if (response['status']) {
+      User.username = "";
+      String uname = response["username"];
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          SnackBar(content: Text("Successfully logged out. See you soon, $uname.")),
+        );
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginPage()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("$message"),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +152,11 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.black, // Black background for the app bar
         foregroundColor: Colors.white, // Pink text color for the app bar title
       ),
-      drawer: const LeftDrawer(), // drawer
+      // drawer: const LeftDrawer(), // drawer
+      bottomNavigationBar: BottomNavBar(
+        selectedIndex: _selectedIndex,
+        onItemTapped: onBottomNavTapped,
+      ), // Navbar
       backgroundColor: Colors.black87,
       body: FutureBuilder(
         future: Future.value(displayedProducts),

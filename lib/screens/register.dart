@@ -40,7 +40,7 @@ class _RegisterPageState extends State<RegisterPage> {
     final request = context.watch<CookieRequest>();
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.black87,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(
@@ -48,8 +48,10 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                FlutterLogo(
-                  size: 100.0,
+                Image.asset(
+                  'images/booxlogo.png', 
+                  width: 200.0,
+                  height: 200.0,
                 ),
                 SizedBox(height: 16.0),
                 Text(
@@ -63,6 +65,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     labelText: 'Username',
                     hintText: 'Enter your username',
                     border: OutlineInputBorder(),
+                    labelStyle: TextStyle(color: Colors.white),
+                    hintStyle: TextStyle(color: Colors.white),
                   ),
                   style: TextStyle(color: Colors.white),
                 ),
@@ -74,6 +78,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     labelText: 'Password',
                     hintText: 'Enter your password',
                     border: OutlineInputBorder(),
+                    labelStyle: TextStyle(color: Colors.white),
+                    hintStyle: TextStyle(color: Colors.white),
                   ),
                   style: TextStyle(color: Colors.white),
                 ),
@@ -85,6 +91,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     labelText: 'Confirm Password',
                     hintText: 'Re-enter your password',
                     border: OutlineInputBorder(),
+                    labelStyle: TextStyle(color: Colors.white),
+                    hintStyle: TextStyle(color: Colors.white),
                   ),
                   style: TextStyle(color: Colors.white),
                 ),
