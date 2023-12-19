@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:boox_mobile/widgets/left_drawer.dart';
 import 'package:boox_mobile/screens/book_details.dart';
