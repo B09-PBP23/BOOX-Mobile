@@ -29,7 +29,7 @@ class _AddCommentScreenState extends State<AddCommentScreen> {
     String comment = commentController.text;
 
     var url = Uri.parse(
-        "http://localhost:8000/readers-favorite/add_comment_flutter/${User.username}/");
+        "https://boox-b09-tk.pbp.cs.ui.ac.id/readers-favorite/add_comment_flutter/${User.username}/");
 
     try {
       var response = await http.post(

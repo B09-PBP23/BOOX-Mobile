@@ -304,7 +304,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MyBookmark(),
+                              builder: (context) => Bookmark(),
                             ),
                           );
                         },

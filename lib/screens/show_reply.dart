@@ -151,7 +151,7 @@ void showReplyBottomSheet(BuildContext context, int idReview) async {
 }
 
 Future<bool> addReply(int reviewId, String replyText) async {
-  final url = Uri.parse('https://boox-b09-tk.pbp.cs.ui.ac.id/editreview/add-reply/');
+  final url = Uri.parse('https://boox-b09-tk.pbp.cs.ui.ac.id/editreview/add-reply/${User.username}/');
   final response = await http.post(
     url,
     headers: {
@@ -179,7 +179,7 @@ Future<bool> addReply(int reviewId, String replyText) async {
 }
 
 Future<bool> deleteReply(int idReply) async {
-  var url = Uri.parse('https://boox-b09-tk.pbp.cs.ui.ac.id/editreview/delete-reply/$idReply/');
+  var url = Uri.parse('https://boox-b09-tk.pbp.cs.ui.ac.id/editreview/delete-reply/${User.username}/');
 
   try {
     var response = await http.delete(
