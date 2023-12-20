@@ -17,7 +17,6 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
 version: 1.0.0+1
-
 environment:
   sdk: '>=3.1.5 <4.0.0'
 
@@ -30,11 +29,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  timeago: ^3.1.0
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  provider: ^6.1.1
+  pbp_django_auth: ^0.4.0
+  intl: ^0.19.0
+  
 
 dev_dependencies:
   flutter_test:
@@ -62,6 +66,10 @@ flutter:
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
+
+  assets:
+    - images/booxlogo.png
+    - images/defaultprofile.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
