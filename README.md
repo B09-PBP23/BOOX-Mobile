@@ -64,3 +64,6 @@ Kelompok kami menggunakan website Django BOOX untuk mengintegrasikan layanan web
 ## Berita Acara:
 Berikut kami lampirkan tautan berita acara kelompok kami:
 https://docs.google.com/spreadsheets/d/1RvQ9kwGlmfCrO0aSPspnHtQ6KtQSP84Z6SnjXjcS-L8/edit?usp=sharing 
+
+## Link Release AppCenter:
+[![Build status](https://build.appcenter.ms/v0.1/apps/9860d1e8-aaa5-4bd3-875b-5378da0ac842/branches/main/badge)](https://appcenter.ms)
