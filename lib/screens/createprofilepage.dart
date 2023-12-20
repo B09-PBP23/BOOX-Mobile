@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:boox_mobile/models/books.dart';
+import 'package:boox_mobile/models/user.dart';
 import 'package:boox_mobile/screens/profilepage.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -203,7 +204,7 @@ class _NewUserProfileFormState extends State<NewUserProfileForm> {
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     final response = await request.postJson(
-                      "https://boox-b09-tk.pbp.cs.ui.ac.id/profile/create-flutter/",
+                      "https://boox-b09-tk.pbp.cs.ui.ac.id/profile/create-flutter/${User.id}/",
                       jsonEncode(<String, String>{
                         'name': _nameController.text,
                         'description': _descriptionController.text,

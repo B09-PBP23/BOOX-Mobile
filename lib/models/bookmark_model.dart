@@ -12,7 +12,7 @@ class BookmarModel {
   final String imageUrlS;
   final String imageUrlM;
   final String imageUrlL;
-  final double totalRatings;
+  final int totalRatings;
   final int totalReviews;
   final int totalUpvotes;
 

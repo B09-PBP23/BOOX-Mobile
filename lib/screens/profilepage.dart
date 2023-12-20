@@ -1,3 +1,4 @@
+import 'package:boox_mobile/screens/bookmark.dart';
 import 'package:boox_mobile/screens/comment_section.dart';
 import 'package:boox_mobile/screens/createprofilepage.dart';
 import 'package:boox_mobile/screens/readers_favorite.dart';
@@ -277,6 +278,54 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     ],
                   ),
                 ),
+                Card(
+                color: Colors.black87,
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  side: BorderSide(color: Colors.white, width: 1),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      Text(
+                        'My Bookmarked Books',
+                        style: TextStyle(
+                          fontSize: 22,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MyBookmark(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          'Show Bookmarked Books',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          padding: EdgeInsets.symmetric(vertical: 12),
+                          minimumSize: Size(double.infinity, 50),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
             ),
           );

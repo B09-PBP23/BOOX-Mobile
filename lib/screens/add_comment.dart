@@ -1,4 +1,5 @@
 import 'package:boox_mobile/screens/comment_section.dart';
+import 'package:boox_mobile/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -27,9 +28,8 @@ class _AddCommentScreenState extends State<AddCommentScreen> {
   Future<void> addComment() async {
     String comment = commentController.text;
 
-    // Replace the URL with the appropriate endpoint to add comments
     var url = Uri.parse(
-        "https://boox-b09-tk.pbp.cs.ui.ac.id/readers-favorite/add_comment/");
+        "http://localhost:8000/readers-favorite/add_comment_flutter/${User.username}/");
 
     try {
       var response = await http.post(
@@ -72,11 +72,11 @@ class _AddCommentScreenState extends State<AddCommentScreen> {
           icon: Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => CommentSection(),
-            ),
-          );
+              context,
+              MaterialPageRoute(
+                builder: (context) => CommentSection(),
+              ),
+            );
           },
         ),
       ),
@@ -88,10 +88,10 @@ class _AddCommentScreenState extends State<AddCommentScreen> {
           children: [
             TextField(
               controller: commentController,
-              style: TextStyle(color: Colors.white), 
+              style: TextStyle(color: Colors.white),
               decoration: InputDecoration(
                 labelText: 'Enter your comment',
-                labelStyle: TextStyle(color: Colors.white), 
+                labelStyle: TextStyle(color: Colors.white),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.white),
                 ),
@@ -103,23 +103,23 @@ class _AddCommentScreenState extends State<AddCommentScreen> {
             ),
             SizedBox(height: 16),
             ElevatedButton(
-            onPressed: addComment,
-            style: ElevatedButton.styleFrom(
-              primary: Colors.pink,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+              onPressed: addComment,
+              style: ElevatedButton.styleFrom(
+                primary: Colors.pink,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              child: Text(
+                'Add Comment',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-            child: Text(
-              'Add Comment',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
           ],
         ),
       ),

@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   late TextEditingController searchController;
   late List<Product> allProducts;
   List<Product> displayedProducts = [];
-  int _selectedIndex = 1; // Index for the selected tab
+  int _selectedIndex = 0; // Index for the selected tab
 
   @override
   void initState() {
