@@ -204,7 +204,7 @@ class _NewUserProfileFormState extends State<NewUserProfileForm> {
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
                     final response = await request.postJson(
-                      "https://boox-b09-tk.pbp.cs.ui.ac.id/profile/create-flutter/${User.id}/",
+                      "https://boox-b09-tk.pbp.cs.ui.ac.id/profile/create-flutter/${User.username}/",
                       jsonEncode(<String, String>{
                         'name': _nameController.text,
                         'description': _descriptionController.text,
